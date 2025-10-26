@@ -8,8 +8,8 @@ namespace ConsoleAppJobbApplication
         static void Main(string[] args)
         {
             JobManager jobManager = new JobManager();
-            Menu menu = new Menu(jobManager); // vi skickar in JobManager till menyn
-            menu.ShowMenu();
+            Menu menu = new Menu(); // vi skickar in JobManager till menyn
+            menu.ShowMainMenu();
 
 
         }

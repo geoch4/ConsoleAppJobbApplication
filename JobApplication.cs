@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleAppJobbApplication
 {
+    public enum Status //enum utanför klassen för bättre återanvändbarhet
+    {
+        Applied = 0,
+        Interview = 1,
+        Offer = 2,
+        Rejected = 3
+    } 
+
     public class JobApplication
     { //JobApplication – representerar en enskild ansökan.
 
@@ -19,14 +28,7 @@ namespace ConsoleAppJobbApplication
                                                      
         //ApplicationStatus är ett egenskap av typen Status (enum)
 
-        public enum Status
-        {
-            Applied = 0,
-            Interview = 1,
-            Offer = 2,
-            Rejected = 3
-        } // enum för status
-
+      
         //skapa kontruktor med alla parametrar
 
         public JobApplication(string positionTitle, DateTime applicationDate, DateTime responseDate, string companyName,
@@ -44,7 +46,8 @@ namespace ConsoleAppJobbApplication
                                              //ApplicationStatus = Status.Applied
         }
 
-        public static void ApplyForJob() //metod för att skicka in ansökan
+        public static JobApplication ApplyForJob() //metod för att skicka in ansökan-skapar en metod här så att vi håller det kort och
+                                         //rent på Program.cs
         { 
             //Registrera ny ansökan 
             Console.WriteLine("Ange Positionstitel:");
@@ -65,32 +68,34 @@ namespace ConsoleAppJobbApplication
                 Console.WriteLine("Ogiltigt tal. Försök igen.");
             }
 
-            DateTime applicationDate; //skapar en lokal variabel här
+            DateTime applicationDate; //skapar en lokal variabel här-i vilket syfte? varför kopplas inte till konstruktor?
 
             while (true)
             {
                 Console.Write("Ange ansökningsdatum (yyyy-MM-dd): ");
-                if (DateTime.TryParse(Console.ReadLine(), out applicationDate)) break;
+                if (DateTime.TryParse(Console.ReadLine(), out applicationDate)) 
+                    break;
                 Console.WriteLine("Ogiltigt datum. Försök igen (format yyyy-MM-dd).");
             }
 
 
-            //på status-ropar på enum från classen
+            //på status-ropar på enum från classen-kan vi inte börja annorlunda här?
             Console.WriteLine("Ange status i ansökan(0-3)");
             Console.WriteLine("Status alternativ: 0=Applied, 1= Interview, 2=Offer, 3=Rejected");//kan man inte bara ropa
-            JobApplication.Status status;
+
+            Status status; 
             while (true)
             {
                 Console.Write("Ange status (0-3): ");
                 if (int.TryParse(Console.ReadLine(), out int statusChoice) &&
-                    Enum.IsDefined(typeof(JobApplication.Status), statusChoice))
+                    Enum.IsDefined(typeof(Status), statusChoice))
                 {
-                    status = (JobApplication.Status)statusChoice;
+                    status = (Status)statusChoice;
                     break;
                 }
                 Console.WriteLine("Ogiltigt val. Ange 0, 1, 2 eller 3.");
             }
-            DateTime responseDate;
+            DateTime responseDate;//skapar lokal variabel här med?
             while (true)
             {
                 Console.Write("Ange svardatum (yyyy-MM-dd): ");//fattar inte
@@ -98,18 +103,24 @@ namespace ConsoleAppJobbApplication
                 Console.WriteLine("Ogiltigt datum. Försök igen (format yyyy-MM-dd).");
             }
 
-            var newApp = new JobApplication(
-            
+            Console.WriteLine("Ansökan klar");
+
+
+
+
+            return new JobApplication(
                 position,
                 applicationDate,
                 responseDate,
                 company,
                 salary,
-                status);
+                status
+   )            ;
 
 
 
-            Console.WriteLine("Ansökan klar");
+
+
 
         }
 
@@ -121,12 +132,18 @@ namespace ConsoleAppJobbApplication
         }
         public string GetSummary() //metod för att returnerar en kort sammanfattning av ansökan.
         {
-            string GetSummary = ($"Position: {PositionTitle}, Company: {CompanyName}, Applied on: {ApplicationDate}, " +
+            string summary = ($"Position: {PositionTitle}, Company: {CompanyName}, Applied on: {ApplicationDate}, " +
             $"" + $"Status: {ApplicationStatus}"); 
-            return GetSummary;
+            return summary; //returnerar stringen, inte själva metoden
 
         }
-
+        //lokala variabler
+        //konstruktor tar emot data
+        //kompilatorn
+        //variabelnamn/typnamn-skillnader
+        //debugging-felhantering-skillnader
+        //Namngivning: PascalCase för egenskaper, camelCase för parametrar
+        //TryParse och TryParseExact-skillnader
     }
 }
 
