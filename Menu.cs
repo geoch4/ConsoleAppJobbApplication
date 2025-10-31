@@ -123,7 +123,8 @@ namespace ConsoleAppJobbApplication
             string company = Console.ReadLine();
             _manager.RemoveByCompany(company);
         }
-
+        
+        }
     }
-}
+
 
