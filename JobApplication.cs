@@ -137,13 +137,7 @@ namespace ConsoleAppJobbApplication
             return summary; //returnerar stringen, inte själva metoden
 
         }
-        //lokala variabler
-        //konstruktor tar emot data
-        //kompilatorn
-        //variabelnamn/typnamn-skillnader
-        //debugging-felhantering-skillnader
-        //Namngivning: PascalCase för egenskaper, camelCase för parametrar
-        //TryParse och TryParseExact-skillnader
+        
     }
 }
 
